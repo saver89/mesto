@@ -1,0 +1,7 @@
+.elements__like-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 1px;
+  width: 1px;
+}
