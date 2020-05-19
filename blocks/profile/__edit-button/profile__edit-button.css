@@ -1,3 +1,21 @@
 .profile__edit-button {
+  margin-top: 19px;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../../images/edit-button.svg");
+  background-repeat: no-repeat;
+  background-color: #000;
+  background-position: center;
+  cursor: pointer;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+}
 
+.profile__edit-button:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background-image: url("../../../images/edit-button-hovered.svg");
+}
+
+.profile__edit-button:focus {
+  outline: none;
 }
