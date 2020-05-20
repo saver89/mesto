@@ -1,3 +1,5 @@
-.footer {
+@import url("./__copyright/footer__copyright.css");
 
+.footer {
+  padding: 66px 0 60px;
 }
