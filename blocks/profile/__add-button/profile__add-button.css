@@ -12,8 +12,7 @@
 }
 
 .profile__add-button:hover {
-  border-color: rgba(255, 255, 255, 0.6);
-  background-image: url("../../../images/add-button-hovered.svg");
+  opacity: 0.6;
 }
 
 .profile__add-button:focus {

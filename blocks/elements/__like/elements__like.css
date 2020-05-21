@@ -6,11 +6,3 @@
   background-repeat: no-repeat;
   background-position: center;
 }
-/*
-.elements__like-input:checked + .elements__like {
-  background-image: url("../../../images/like-checked.svg");
-}
-*/
-.elements__like:hover {
-  background-image: url("../../../images/like-hovered.svg");
-}
