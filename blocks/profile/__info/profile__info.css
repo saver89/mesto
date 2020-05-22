@@ -1,8 +1,9 @@
 .profile__info {
   margin-top: 18px;
+  transition: margin 1s linear;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 700px) {
   .profile__info {
     margin: 10px auto 0;
   }

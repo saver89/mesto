@@ -3,7 +3,13 @@
   margin: auto;
   width: 100%;
   max-width: 471px;
-  min-height: 371px;
   padding: 41px 41px 0 0;
+  transition: padding 1s linear;
 }
 
+
+@media screen and (max-width:520px) {
+  .popup__container {
+    padding: 42px 0;
+  }
+}

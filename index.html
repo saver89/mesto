@@ -11,101 +11,92 @@
 <body class="page">
   <div class="container">
     <header class="header">
-      <a href="/" class="header__logo"></a>
-      <hr class="header__line" />
+      <a class="header__logo"></a>
     </header>
     <main class="main">
       <section class="profile">
         <div class="profile__info-container">
-          <img class="profile__avatar" src="./images/avatar.jpg" alt="Жак-Ив Кусто"/>
+          <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар пользователя" />
           <div class="profile__info">
             <div class="profile__name-container">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
-              <button class="profile__edit-button"></button>
+              <button class="profile__edit-button" type="button" aria-label="Редактировать профиль"></button>
             </div>
             <p class="profile__position">Исследователь океана</p>
           </div>
         </div>
-        <button class="profile__add-button"></button>
+        <button class="profile__add-button" type="button" aria-label="Добавить"></button>
       </section>
       <section class="elements">
-        <figure class="elements__element">
-          <img class="elements__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
-          <div class="elements__info-container">
-            <p class="elements__name">Карачаевск</p>
-            <label class="elements__like-container">
-              <input class="elements__like-input" type="checkbox">
-              <span class="elements__like"></span>
-            </label>
+        <figure class="element">
+          <div class="element__image-container">
+            <img class="element__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
+          </div>
+          <div class="element__info-container">
+            <h3 class="element__name">Карачаевск</h3>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
         </figure>
-        <figure class="elements__element">
-          <img class="elements__image" src="./images/baykal.jpg" alt="Байкал">
-          <div class="elements__info-container">
-            <p class="elements__name">Байкал</p>
-            <label class="elements__like-container">
-              <input class="elements__like-input" type="checkbox">
-              <span class="elements__like"></span>
-            </label>
+        <figure class="element">
+          <div class="element__image-container">
+            <img class="element__image" src="./images/baykal.jpg" alt="Байкал">
+          </div>
+          <div class="element__info-container">
+            <h3 class="element__name">Байкал</h3>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
         </figure>
-        <figure class="elements__element">
-          <img class="elements__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
-          <div class="elements__info-container">
-            <p class="elements__name">Гора Эльбрус</p>
-            <label class="elements__like-container">
-              <input class="elements__like-input" type="checkbox">
-              <span class="elements__like"></span>
-            </label>
+        <figure class="element">
+          <div class="element__image-container">
+            <img class="element__image" src="./images/elbrus.jpg" alt="Гора Эльбрус">
+          </div>
+          <div class="element__info-container">
+            <h3 class="element__name">Гора Эльбрус</h3>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
         </figure>
-        <figure class="elements__element">
-          <img class="elements__image" src="./images/alps.jpg" alt="Альпы">
-          <div class="elements__info-container">
-            <p class="elements__name">Альпы</p>
-            <label class="elements__like-container">
-              <input class="elements__like-input" type="checkbox">
-              <span class="elements__like"></span>
-            </label>
+        <figure class="element">
+          <div class="element__image-container">
+          <img class="element__image" src="./images/alps.jpg" alt="Альпы">
+        </div>
+          <div class="element__info-container">
+            <h3 class="element__name">Альпы</h3>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
         </figure>
-        <figure class="elements__element">
-          <img class="elements__image" src="./images/thailand.jpg" alt="Тайланд">
-          <div class="elements__info-container">
-            <p class="elements__name">Тайланд</p>
-            <label class="elements__like-container">
-              <input class="elements__like-input" type="checkbox">
-              <span class="elements__like"></span>
-            </label>
+        <figure class="element">
+          <div class="element__image-container">
+          <img class="element__image" src="./images/thailand.jpg" alt="Тайланд"></div>
+          <div class="element__info-container">
+            <h3 class="element__name">Тайланд</h3>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
         </figure>
-        <figure class="elements__element">
-          <img class="elements__image" src="./images/karachaevo.jpg" alt="Карачаево-Черкеская республика">
-          <div class="elements__info-container">
-            <p class="elements__name">Карачаево-Черкеская республика</p>
-            <label class="elements__like-container">
-              <input class="elements__like-input" type="checkbox">
-              <span class="elements__like"></span>
-            </label>
+        <figure class="element">
+          <div class="element__image-container">
+          <img class="element__image" src="./images/karachaevo.jpg" alt="Карачаево-Черкеская республика"></div>
+          <div class="element__info-container">
+            <h3 class="element__name">Карачаево-Черкеская республика</h3>
+            <button class="element__like" type="button" aria-label="Нравится"></button>
           </div>
         </figure>
       </section>
     </main>
     <footer class="footer">
-      <small class="footer__copyright">&copy; 2020 Mesto Russia</small>
+      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
   <div class="popup">
-    <form name="edit-form" class="popup__container">
+    <form name="edit-form" action="#" method="GET" class="popup__container">
       <div class="popup__form-container">
         <fieldset class="popup__fieldset">
           <legend class="popup__title">Редактировать профиль</legend>
-          <input class="popup__input popup__input_edit_name" type="text" placeholder="Имя">
-          <input class="popup__input popup__input_edit_position" type="text" placeholder="Род занятий">
+          <input class="popup__input popup__input_edit_name" name="name" type="text" placeholder="Имя" required>
+          <input class="popup__input popup__input_edit_position" name="position" type="text" placeholder="Род занятий" required>
         </fieldset>
-        <button class="popup__save-button">Сохранить</button>
+        <button type="sumbit" class="popup__save-button">Сохранить</button>
       </div>
-      <button type="button" class="popup__close-button"></button>
+      <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
     </form>
   </div>
   <script src="./scripts/script.js"></script>
