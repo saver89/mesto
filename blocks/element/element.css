@@ -1,10 +1,7 @@
 @import url("./__image/element__image.css");
 @import url("./__info-container/element__info-container.css");
-@import url("./__like-container/element__like-container.css");
-@import url("./__like-input/element__like-input.css");
 @import url("./__like/element__like.css");
 @import url("./__name/element__name.css");
-@import url("./__image-container/element__image-container.css");
 
 .element {
   border-radius: 10px;
