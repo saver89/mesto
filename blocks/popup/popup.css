@@ -8,7 +8,8 @@
 @import url("./__form-container_visible/popup__form-container_visible.css");
 
 .popup {
-  display: none;
+  visibility: hidden;
+  opacity: 0;
   position: fixed;
   top: 0;
   left: 0;
@@ -16,4 +17,5 @@
   height: 100%;
   z-index: 1;
   background-color: rgb(0, 0, 0, 0.5);
+  transition: visibility 0s, opacity 0.5s linear;
 }
