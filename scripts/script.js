@@ -1,35 +1,57 @@
 const editButton = document.querySelector(".profile__edit-button"),
-  closeButton = document.querySelector(".popup__close-button"),
-  formElement = document.querySelector(".popup__container");
-let nameInput = document.querySelector(".popup__input_edit_name"),
-  positionInput = document.querySelector(".popup__input_edit_position"),
+  addButton = document.querySelector(".profile__add-button");
   nameElement = document.querySelector(".profile__name"),
-  positionElement = document.querySelector(".profile__position");;
+  positionElement = document.querySelector(".profile__position"),
+  popup = document.querySelector(".popup"),
+  closeButton = popup.querySelector(".popup__close-button"),
+  editFormElement = popup.querySelector(".popup__form-container_edit-form"),
+  editNameInput = editFormElement.querySelector(".popup__input_edit_name"),
+  editPositionInput = editFormElement.querySelector(".popup__input_edit_position"),
+  addFormElement = popup.querySelector(".popup__form-container_add-form"),
+  addNameInput = addFormElement.querySelector(".popup__input_add_name"),
+  addUrlInput = addFormElement.querySelector(".popup__input_add_url");
 
 //обработка открытия/закрытия окна редактирования
-function toggleEditForm() {
-  const popup = document.querySelector(".popup");
-
-  if (!popup.classList.contains("popup_opened")) {
-    const nameValue = nameElement.textContent,
-      positionValue = positionElement.textContent;
-
-    nameInput.value = nameValue;
-    positionInput.value = positionValue;
-  }
-
+function togglePopup() {
   popup.classList.toggle("popup_opened");
 }
 
-//Обработка сохрания данных формы
-function formSubmitHandler(evt) {
-  evt.preventDefault();
+function openEditForm() {
+  editNameInput.value = nameElement.textContent;
+  editPositionInput.value = positionElement.textContent;
+  editFormElement.classList.add("popup__form-container_visible");
+  addFormElement.classList.remove("popup__form-container_visible");
 
-  nameElement.textContent = nameInput.value;
-  positionElement.textContent = positionInput.value;
-  toggleEditForm();
+  togglePopup();
 }
 
-editButton.addEventListener("click", toggleEditForm);
-closeButton.addEventListener("click", toggleEditForm);
-formElement.addEventListener("submit", formSubmitHandler);
+function openAddForm() {
+  addFormElement.value = "";
+  addUrlInput.value = "";
+  editFormElement.classList.remove("popup__form-container_visible");
+  addFormElement.classList.add("popup__form-container_visible");
+
+  togglePopup();
+}
+
+//Обработка сохрания данных формы
+function editformSubmitHandler(evt) {
+  evt.preventDefault();
+
+  nameElement.textContent = editNameInput.value;
+  positionElement.textContent = editPositionInput.value;
+  togglePopup();
+}
+
+
+editButton.addEventListener("click", openEditForm);
+addButton.addEventListener("click", openAddForm);
+closeButton.addEventListener("click", togglePopup);
+editFormElement.addEventListener("submit", editformSubmitHandler);
+addFormElement.addEventListener("submit", editformSubmitHandler);
+//закрытие формы через escape
+document.addEventListener("keydown", function(evt) {
+  if (evt.keyCode == 27) {
+    popup.classList.remove("popup_opened");
+  }
+});

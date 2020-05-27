@@ -8,13 +8,12 @@
 @import url("./__info-container/profile__info-container.css");
 
 .profile {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 120px auto 150px;
 }
 
 @media screen and (max-width: 700px) {
   .profile {
-    flex-direction: column;
+    grid-template-columns: 100%;
   }
 }
