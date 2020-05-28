@@ -18,3 +18,12 @@
 .popup__input:focus {
   outline: none;
 }
+
+@media screen and (max-width:520px) {
+  .popup__input {
+    height: 36px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

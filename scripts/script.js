@@ -12,8 +12,8 @@ const editButton = document.querySelector(".profile__edit-button"),
   addFormElement = popup.querySelector(".popup__form-container_add-form"),
   addNameInput = addFormElement.querySelector(".popup__input_add_name"),
   addUrlInput = addFormElement.querySelector(".popup__input_add_url"),
-  cardTemplate = document.querySelector("#card-template");
-  cardsElement = document.querySelector(".elements");
+  cardTemplate = document.querySelector("#card-template"),
+  cardsElement = document.querySelector(".elements"),
   cards = [
     {
       name: "Архыз",
@@ -48,15 +48,17 @@ const editButton = document.querySelector(".profile__edit-button"),
   ];
 
 function renderCards() {
-  cards.forEach((card)=> {
-    const cardElement = cardTemplate.content.cloneNode(true);
-    const imageElement = cardElement.querySelector(".element__image");
-    imageElement.src = card.link;
-    imageElement.alt = card.name;
-    cardElement.querySelector(".element__name").textContent = card.name;
+  cards.forEach(renderCard);
+}
 
-    cardsElement.append(cardElement);
-  })
+function renderCard(card) {
+  const cardElement = cardTemplate.content.cloneNode(true);
+  const imageElement = cardElement.querySelector(".element__image");
+  imageElement.src = card.link;
+  imageElement.alt = card.name;
+  cardElement.querySelector(".element__name").textContent = card.name;
+
+  cardsElement.prepend(cardElement);
 }
 
 //обработка открытия/закрытия popup
@@ -95,6 +97,14 @@ function editFormSubmitHandler(evt) {
 
 function addFormSubmitHandler(evt) {
   evt.preventDefault();
+
+  const newCard = {
+    name: addNameInput.value,
+    link: addUrlInput.value
+  };
+  cards.unshift(newCard);
+  renderCard(newCard);
+
   togglePopup();
 }
 

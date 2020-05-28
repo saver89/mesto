@@ -8,6 +8,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-color: transparent;
+  background-size: cover;
   border: 0;
   cursor: pointer;
 }
@@ -19,3 +20,11 @@
 .popup__close-button:hover {
   opacity: 0.6;
 }
+
+@media screen and (max-width:520px) {
+  .popup__close-button {
+    width: 30px;
+    height: 30px;
+  }
+}
+

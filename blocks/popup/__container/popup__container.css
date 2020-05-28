@@ -3,13 +3,13 @@
   margin: auto;
   width: 100%;
   max-width: 471px;
-  padding: 41px 41px 0 0;
+  padding: 36px 36px 0 0;
   transition: padding 1s linear;
 }
 
 
 @media screen and (max-width:520px) {
   .popup__container {
-    padding: 42px 0;
+    padding: 24px 24px;
   }
 }
