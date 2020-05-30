@@ -13,8 +13,40 @@ const editButton = document.querySelector(".profile__edit-button"),
   addNameInput = addFormElement.querySelector(".popup__input_add_name"),
   addUrlInput = addFormElement.querySelector(".popup__input_add_url"),
   cardTemplate = document.querySelector("#card-template"),
-  cardsElement = document.querySelector(".elements");
+  cardsElement = document.querySelector(".elements"),
+  popupImagePreview = document.querySelector(".popup__image-preview"),
+  popupImage = document.querySelector(".popup__image"),
+  popupImageName = document.querySelector(".popup__image-name");
 
+//обработка открытия popup
+function showPopup() {
+  addFormElement.classList.remove("popup__form-container_visible");
+  editFormElement.classList.remove("popup__form-container_visible");
+  popupImagePreview.classList.remove("popup__image-preview_visible");
+
+  popup.classList.add("popup_opened");
+}
+
+//обработка закрытия popup
+function closePopup() {
+  popup.classList.remove("popup_opened");
+}
+
+function toggleLike(evt) {
+  evt.target.classList.toggle("element__like_liked");
+}
+
+//показать картинку карточки
+function showPreview(card) {
+  popupImage.src = card.link;
+  popupImage.alt = card.name;
+  popupImageName.textContent = card.name;
+
+  showPopup();
+  popupImagePreview.classList.add("popup__image-preview_visible");
+}
+
+//вывести все карточки
 function renderCards() {
   cards.forEach(renderCard);
 }
@@ -26,34 +58,35 @@ function renderCard(card) {
   imageElement.alt = card.name;
   cardElement.querySelector(".element__name").textContent = card.name;
 
-  removeButton = cardElement.querySelector(".element__remove");
+  //обработка вывода изображения карточки
+  imageElement.addEventListener("click", () => {
+    showPreview(card);
+  });
+  //обработка удаления карточки
+  const removeButton = cardElement.querySelector(".element__remove");
   removeButton.addEventListener("click", removeCard);
+  //обработка нажатия на кнопку "нравится"
+  const likeButton = cardElement.querySelector(".element__like");
+  likeButton.addEventListener("click", toggleLike);
   cardsElement.prepend(cardElement);
-}
-
-//обработка открытия/закрытия popup
-function togglePopup() {
-  popup.classList.toggle("popup_opened");
 }
 
 //открытие формы редактирования профиля
 function openEditForm() {
   editNameInput.value = nameElement.textContent;
   editPositionInput.value = positionElement.textContent;
-  editFormElement.classList.add("popup__form-container_visible");
-  addFormElement.classList.remove("popup__form-container_visible");
 
-  togglePopup();
+  showPopup();
+  editFormElement.classList.add("popup__form-container_visible");
 }
 
 //открытие формы добавления изображения
 function openAddForm() {
   addNameInput.value = "";
   addUrlInput.value = "";
-  editFormElement.classList.remove("popup__form-container_visible");
-  addFormElement.classList.add("popup__form-container_visible");
 
-  togglePopup();
+  showPopup();
+  addFormElement.classList.add("popup__form-container_visible");
 }
 
 //Обработка сохрания данных формы
@@ -62,9 +95,11 @@ function editFormSubmitHandler(evt) {
 
   nameElement.textContent = editNameInput.value;
   positionElement.textContent = editPositionInput.value;
-  togglePopup();
+  showPopup();
+  addFormElement.classList.add("popup__form-container_visible");
 }
 
+//добавление карточки
 function addCard(card) {
   cards.unshift(card);
   renderCard(card);
@@ -75,6 +110,8 @@ function removeCard(evt) {
   const cardName = cardElement.querySelector(".element__name").textContent;
   const cardIndex = cards.findIndex((elem) => elem.name === cardName);
   cards = cards.filter((elem) => elem.name !== cardName);
+
+  //т.к. элементы располагаются в обратно порядке, то нужен индекс с конца массива
   cardsElement.children[cards.length - cardIndex].remove();
 }
 
@@ -91,14 +128,14 @@ function addFormSubmitHandler(evt) {
 
 addButton.addEventListener("click", openAddForm);
 editButton.addEventListener("click", openEditForm);
-closeButton.addEventListener("click", togglePopup);
+closeButton.addEventListener("click", closePopup);
 editFormElement.addEventListener("submit", editFormSubmitHandler);
 addFormElement.addEventListener("submit", addFormSubmitHandler);
 //закрытие формы через escape
 document.addEventListener("keydown", (evt) => {
   const escapeCode = 27;
   if (evt.keyCode == escapeCode) {
-    popup.classList.remove("popup_opened");
+    closePopup();
   }
 });
 
