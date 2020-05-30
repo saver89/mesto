@@ -13,39 +13,7 @@ const editButton = document.querySelector(".profile__edit-button"),
   addNameInput = addFormElement.querySelector(".popup__input_add_name"),
   addUrlInput = addFormElement.querySelector(".popup__input_add_url"),
   cardTemplate = document.querySelector("#card-template"),
-  cardsElement = document.querySelector(".elements"),
-  cards = [
-    {
-      name: "Архыз",
-      link:
-        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-    },
-    {
-      name: "Челябинская область",
-      link:
-        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-    },
-    {
-      name: "Иваново",
-      link:
-        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-    },
-    {
-      name: "Камчатка",
-      link:
-        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-    },
-    {
-      name: "Холмогорский район",
-      link:
-        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-    },
-    {
-      name: "Байкал",
-      link:
-        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-    },
-  ];
+  cardsElement = document.querySelector(".elements");
 
 function renderCards() {
   cards.forEach(renderCard);
@@ -58,6 +26,8 @@ function renderCard(card) {
   imageElement.alt = card.name;
   cardElement.querySelector(".element__name").textContent = card.name;
 
+  removeButton = cardElement.querySelector(".element__remove");
+  removeButton.addEventListener("click", removeCard);
   cardsElement.prepend(cardElement);
 }
 
@@ -78,7 +48,7 @@ function openEditForm() {
 
 //открытие формы добавления изображения
 function openAddForm() {
-  addFormElement.value = "";
+  addNameInput.value = "";
   addUrlInput.value = "";
   editFormElement.classList.remove("popup__form-container_visible");
   addFormElement.classList.add("popup__form-container_visible");
@@ -95,26 +65,37 @@ function editFormSubmitHandler(evt) {
   togglePopup();
 }
 
+function addCard(card) {
+  cards.unshift(card);
+  renderCard(card);
+}
+
+function removeCard(evt) {
+  const cardElement = evt.target.closest(".element");
+  const cardName = cardElement.querySelector(".element__name").textContent;
+  const cardIndex = cards.findIndex((elem) => elem.name === cardName);
+  cards = cards.filter((elem) => elem.name !== cardName);
+  cardsElement.children[cards.length - cardIndex].remove();
+}
+
 function addFormSubmitHandler(evt) {
   evt.preventDefault();
 
   const newCard = {
     name: addNameInput.value,
-    link: addUrlInput.value
+    link: addUrlInput.value,
   };
-  cards.unshift(newCard);
-  renderCard(newCard);
 
-  togglePopup();
+  addCard(newCard);
 }
 
-editButton.addEventListener("click", openEditForm);
 addButton.addEventListener("click", openAddForm);
+editButton.addEventListener("click", openEditForm);
 closeButton.addEventListener("click", togglePopup);
 editFormElement.addEventListener("submit", editFormSubmitHandler);
 addFormElement.addEventListener("submit", addFormSubmitHandler);
 //закрытие формы через escape
-document.addEventListener("keydown", function (evt) {
+document.addEventListener("keydown", (evt) => {
   const escapeCode = 27;
   if (evt.keyCode == escapeCode) {
     popup.classList.remove("popup_opened");

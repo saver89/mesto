@@ -3,6 +3,7 @@
 @import url("./__info-container/element__info-container.css");
 @import url("./__like/element__like.css");
 @import url("./__name/element__name.css");
+@import url("./__remove/__remove.css");
 
 .element {
   border-radius: 10px;
@@ -10,4 +11,5 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
