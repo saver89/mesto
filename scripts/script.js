@@ -18,12 +18,15 @@ const editButton = document.querySelector(".profile__edit-button"),
   popupImage = document.querySelector(".popup__image"),
   popupImageName = document.querySelector(".popup__image-name");
 
-//обработка открытия popup
-function showPopup() {
+function setPopupToInitialState() {
   addFormElement.classList.remove("popup__form-container_visible");
   editFormElement.classList.remove("popup__form-container_visible");
   popupImagePreview.classList.remove("popup__image-preview_visible");
+}
 
+//обработка открытия popup
+function showPopup() {
+  setPopupToInitialState();
   popup.classList.add("popup_opened");
 }
 
@@ -32,6 +35,7 @@ function closePopup() {
   popup.classList.remove("popup_opened");
 }
 
+//нажатие на лайк
 function toggleLike(evt) {
   evt.target.classList.toggle("element__like_liked");
 }
@@ -95,13 +99,12 @@ function editFormSubmitHandler(evt) {
 
   nameElement.textContent = editNameInput.value;
   positionElement.textContent = editPositionInput.value;
-  showPopup();
-  addFormElement.classList.add("popup__form-container_visible");
+  closePopup();
 }
 
 //добавление карточки
 function addCard(card) {
-  cards.unshift(card);
+  cards.push(card);
   renderCard(card);
 }
 
@@ -109,10 +112,10 @@ function removeCard(evt) {
   const cardElement = evt.target.closest(".element");
   const cardName = cardElement.querySelector(".element__name").textContent;
   const cardIndex = cards.findIndex((elem) => elem.name === cardName);
-  cards = cards.filter((elem) => elem.name !== cardName);
 
   //т.к. элементы располагаются в обратно порядке, то нужен индекс с конца массива
-  cardsElement.children[cards.length - cardIndex].remove();
+  cardsElement.children[cards.length - cardIndex - 1].remove();
+  cards = cards.filter((elem) => elem.name !== cardName);
 }
 
 function addFormSubmitHandler(evt) {
@@ -124,6 +127,7 @@ function addFormSubmitHandler(evt) {
   };
 
   addCard(newCard);
+  closePopup();
 }
 
 addButton.addEventListener("click", openAddForm);
