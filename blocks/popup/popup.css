@@ -22,5 +22,5 @@
   height: 100%;
   z-index: 1;
   background-color: rgb(0, 0, 0, 0.5);
-  transition: visibility 0s, opacity 0.5s linear;
+  transition: visibility 0.5s linear, opacity 0.5s linear;
 }
