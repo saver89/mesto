@@ -50,11 +50,6 @@ function showPreview(card) {
   popupImagePreview.classList.add("popup__image-preview_visible");
 }
 
-//вывести все карточки
-function renderCards() {
-  cards.forEach(renderCard);
-}
-
 function renderCard(card) {
   const cardElement = cardTemplate.content.cloneNode(true);
   const imageElement = cardElement.querySelector(".element__image");
@@ -68,7 +63,10 @@ function renderCard(card) {
   });
   //обработка удаления карточки
   const removeButton = cardElement.querySelector(".element__remove");
-  removeButton.addEventListener("click", removeCard);
+  removeButton.addEventListener("click", (evt) => {
+    const cardElement = evt.target.closest(".element");
+    removeCard(cardElement);
+  });
   //обработка нажатия на кнопку "нравится"
   const likeButton = cardElement.querySelector(".element__like");
   likeButton.addEventListener("click", toggleLike);
@@ -108,14 +106,10 @@ function addCard(card) {
   renderCard(card);
 }
 
-function removeCard(evt) {
-  const cardElement = evt.target.closest(".element");
+function removeCard(cardElement) {
   const cardName = cardElement.querySelector(".element__name").textContent;
-  const cardIndex = cards.findIndex((elem) => elem.name === cardName);
-
-  //т.к. элементы располагаются в обратно порядке, то нужен индекс с конца массива
-  cardsElement.children[cards.length - cardIndex - 1].remove();
   cards = cards.filter((elem) => elem.name !== cardName);
+  cardElement.remove();
 }
 
 function addFormSubmitHandler(evt) {
@@ -143,4 +137,4 @@ document.addEventListener("keydown", (evt) => {
   }
 });
 
-renderCards();
+cards.forEach(renderCard);
