@@ -4,7 +4,7 @@
 @import url("./__like/element__like.css");
 @import url("./__like_liked/element__like_liked.css");
 @import url("./__name/element__name.css");
-@import url("./__remove/__remove.css");
+@import url("./__remove/element__remove.css");
 
 .element {
   border-radius: 10px;

@@ -16,7 +16,39 @@ const editButton = document.querySelector(".profile__edit-button"),
   cardsElement = document.querySelector(".elements"),
   popupImagePreview = document.querySelector(".popup__image-preview"),
   popupImage = document.querySelector(".popup__image"),
-  popupImageName = document.querySelector(".popup__image-name");
+  popupImageName = document.querySelector(".popup__image-name"),
+  cards = [
+    {
+      name: "Архыз",
+      link:
+        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+    },
+    {
+      name: "Челябинская область",
+      link:
+        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+    },
+    {
+      name: "Иваново",
+      link:
+        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+    },
+    {
+      name: "Камчатка",
+      link:
+        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+    },
+    {
+      name: "Холмогорский район",
+      link:
+        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+    },
+    {
+      name: "Байкал",
+      link:
+        "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+    },
+  ];
 
 function setPopupToInitialState() {
   addFormElement.classList.remove("popup__form-container_visible");
@@ -38,6 +70,10 @@ function closePopup() {
 //нажатие на лайк
 function toggleLike(evt) {
   evt.target.classList.toggle("element__like_liked");
+}
+
+function removeCard(cardElement) {
+  cardElement.remove();
 }
 
 //показать картинку карточки
@@ -64,8 +100,7 @@ function renderCard(card) {
   //обработка удаления карточки
   const removeButton = cardElement.querySelector(".element__remove");
   removeButton.addEventListener("click", (evt) => {
-    const cardElement = evt.target.closest(".element");
-    removeCard(cardElement);
+    removeCard(evt.target.closest(".element"));
   });
   //обработка нажатия на кнопку "нравится"
   const likeButton = cardElement.querySelector(".element__like");
@@ -102,14 +137,7 @@ function editFormSubmitHandler(evt) {
 
 //добавление карточки
 function addCard(card) {
-  cards.push(card);
   renderCard(card);
-}
-
-function removeCard(cardElement) {
-  const cardName = cardElement.querySelector(".element__name").textContent;
-  cards = cards.filter((elem) => elem.name !== cardName);
-  cardElement.remove();
 }
 
 function addFormSubmitHandler(evt) {
@@ -132,7 +160,7 @@ addFormElement.addEventListener("submit", addFormSubmitHandler);
 //закрытие формы через escape
 document.addEventListener("keydown", (evt) => {
   const escapeCode = 27;
-  if (evt.keyCode == escapeCode) {
+  if (evt.keyCode === escapeCode) {
     closePopup();
   }
 });
