@@ -17,7 +17,7 @@
   outline: none;
 }
 
-.popup__save-button:hover {
+.popup__save-button:hover:enabled {
   background-color: rgb(0, 0, 0, .8);
 }
 
