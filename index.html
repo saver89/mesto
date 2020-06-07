@@ -40,18 +40,32 @@
       <form class="popup__form-container  popup__form-container_edit-form" name="edit-form" action="#" method="GET">
         <fieldset class="popup__fieldset">
           <legend class="popup__title">Редактировать профиль</legend>
-          <input class="popup__input popup__input_edit_name" name="name" type="text" placeholder="Имя" required>
-          <input class="popup__input popup__input_edit_position" name="position" type="text" placeholder="Род занятий"
-            required>
+          <label class="popup__form-field">
+            <input class="popup__input popup__input_edit_name" id="input-edit-name" name="name" type="text"
+              placeholder="Имя" required>
+            <span class="popup__input-error popup__input-error_active" id="input-edit-name-error"></span>
+          </label>
+          <label class="popup__form-field">
+            <input class="popup__input popup__input_edit_position" id="input-edit-position" name="position" type="text"
+              placeholder="Род занятий" required>
+            <span class="popup__input-error popup__input-error_active" id="input-edit-position-error"></span>
+          </label>
         </fieldset>
         <button type="submit" class="popup__save-button popup__save-button_disabled">Сохранить</button>
       </form>
       <form class="popup__form-container popup__form-container_add-form" name="edit-form" action="#" method="GET">
         <fieldset class="popup__fieldset">
           <legend class="popup__title">Новое место</legend>
-          <input class="popup__input popup__input_add_name" name="name" type="text" placeholder="Название" required>
-          <input class="popup__input popup__input_add_url" name="url" type="text" placeholder="Ссылка на картинку"
-            required>
+          <label class="popup__form-field">
+            <input class="popup__input popup__input_add_name" id="input-add-name" name="name" type="text"
+              placeholder="Название" required>
+            <span class="popup__input-error popup__input-error_active" id="input-add-name-error"></span>
+          </label>
+          <label class="popup__form-field">
+            <input class="popup__input popup__input_add_url" id="input-add-url" name="url" type="text"
+              placeholder="Ссылка на картинку" required>
+            <span class="popup__input-error popup__input-error_active" id="input-add-url-error"></span>
+          </label>
         </fieldset>
         <button type="submit" class="popup__save-button">Создать</button>
       </form>
