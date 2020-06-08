@@ -20,8 +20,8 @@ const checkInputValidity = (formElement, inputElement) => {
   }
 };
 
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.form__input'));
+const setEventListeners = (formElement, inputSelector) => {
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement);
@@ -30,13 +30,13 @@ const setEventListeners = (formElement) => {
 };
 
 const enableValidation = (configObject) => {
-  const formList = Array.from(document.querySelectorAll(".form"));
+  const formList = Array.from(document.querySelectorAll(configObject.formSelector));
   formList.forEach((formElement) => {
     formElement.addEventListener("submit", function(evt) {
       evt.preventDefault();
     });
 
-    setEventListeners(formElement);
+    setEventListeners(formElement, configObject.inputSelector);
   });
 };
 
