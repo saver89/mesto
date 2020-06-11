@@ -6,9 +6,7 @@ const editButton = document.querySelector(".profile__edit-button"),
   closeButton = popup.querySelector(".popup__close-button"),
   editFormElement = popup.querySelector(".popup__form-container_edit-form"),
   editNameInput = editFormElement.querySelector(".popup__input_edit_name"),
-  editPositionInput = editFormElement.querySelector(
-    ".popup__input_edit_position"
-  ),
+  editPositionInput = editFormElement.querySelector(".popup__input_edit_position"),
   addFormElement = popup.querySelector(".popup__form-container_add-form"),
   addNameInput = addFormElement.querySelector(".popup__input_add_name"),
   addUrlInput = addFormElement.querySelector(".popup__input_add_url"),
@@ -64,6 +62,12 @@ function showPopup() {
 
 //обработка закрытия popup
 function closePopup() {
+  const inputErrors = Array.from(popup.querySelectorAll(".popup__input-error"));
+  inputErrors.forEach((element) => {
+    element.textContent = "";
+    element.classList.remove("popup__input-error_active");
+  });
+
   popup.classList.remove("popup_opened");
 }
 
@@ -113,6 +117,10 @@ function openEditForm() {
   editNameInput.value = nameElement.textContent;
   editPositionInput.value = positionElement.textContent;
 
+  const sumbitButton = editFormElement.querySelector(".popup__save-button");
+  sumbitButton.classList.remove("popup__save-button_disabled");
+  sumbitButton.removeAttribute("disabled");
+
   showPopup();
   editFormElement.classList.add("popup__form-container_visible");
 }
@@ -121,6 +129,10 @@ function openEditForm() {
 function openAddForm() {
   addNameInput.value = "";
   addUrlInput.value = "";
+
+  const sumbitButton = addFormElement.querySelector(".popup__save-button");
+  sumbitButton.classList.add("popup__save-button_disabled");
+  sumbitButton.setAttribute("disabled", true);
 
   showPopup();
   addFormElement.classList.add("popup__form-container_visible");
