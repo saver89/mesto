@@ -3,6 +3,7 @@ const editButton = document.querySelector(".profile__edit-button"),
   nameElement = document.querySelector(".profile__name"),
   positionElement = document.querySelector(".profile__position"),
   popup = document.querySelector(".popup"),
+
   closeButton = popup.querySelector(".popup__close-button"),
   editFormElement = popup.querySelector(".popup__form-container_edit-form"),
   editNameInput = editFormElement.querySelector(".popup__input_edit_name"),
@@ -169,6 +170,12 @@ editButton.addEventListener("click", openEditForm);
 closeButton.addEventListener("click", closePopup);
 editFormElement.addEventListener("submit", editFormSubmitHandler);
 addFormElement.addEventListener("submit", addFormSubmitHandler);
+popup.addEventListener("click", (evt) => {
+  if (!evt.target.closest(".popup__image-preview") && !evt.target.closest(".popup__form-container")) {
+    closePopup();
+  }
+});
+
 //закрытие формы через escape
 document.addEventListener("keydown", (evt) => {
   const escapeCode = 27;
