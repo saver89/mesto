@@ -55,10 +55,18 @@ function setPopupToInitialState() {
   popupImagePreview.classList.remove("popup__image-preview_visible");
 }
 
+const closePopupByEsc = (evt) => {
+  const escapeCode = 27;
+  if (evt.keyCode === escapeCode) {
+    closePopup();
+  }
+}
+
 //обработка открытия popup
 function showPopup() {
   setPopupToInitialState();
   popup.classList.add("popup_opened");
+  document.addEventListener("keydown", closePopupByEsc);
 }
 
 //обработка закрытия popup
@@ -70,6 +78,7 @@ function closePopup() {
   });
 
   popup.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closePopupByEsc);
 }
 
 //нажатие на лайк
@@ -113,14 +122,18 @@ function renderCard(card) {
   cardsElement.prepend(cardElement);
 }
 
+function checkButtonState(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
+  const submitButton = formElement.querySelector(".popup__save-button");
+  toggleButtonState(inputList, submitButton, "popup__save-button_disabled");
+}
+
 //открытие формы редактирования профиля
 function openEditForm() {
   editNameInput.value = nameElement.textContent;
   editPositionInput.value = positionElement.textContent;
 
-  const sumbitButton = editFormElement.querySelector(".popup__save-button");
-  sumbitButton.classList.remove("popup__save-button_disabled");
-  sumbitButton.removeAttribute("disabled");
+  checkButtonState(editFormElement);
 
   showPopup();
   editFormElement.classList.add("popup__form-container_visible");
@@ -131,9 +144,7 @@ function openAddForm() {
   addNameInput.value = "";
   addUrlInput.value = "";
 
-  const sumbitButton = addFormElement.querySelector(".popup__save-button");
-  sumbitButton.classList.add("popup__save-button_disabled");
-  sumbitButton.setAttribute("disabled", true);
+  checkButtonState(addFormElement);
 
   showPopup();
   addFormElement.classList.add("popup__form-container_visible");
@@ -172,14 +183,6 @@ editFormElement.addEventListener("submit", editFormSubmitHandler);
 addFormElement.addEventListener("submit", addFormSubmitHandler);
 popup.addEventListener("click", (evt) => {
   if (!evt.target.closest(".popup__image-preview") && !evt.target.closest(".popup__form-container")) {
-    closePopup();
-  }
-});
-
-//закрытие формы через escape
-document.addEventListener("keydown", (evt) => {
-  const escapeCode = 27;
-  if (evt.keyCode === escapeCode) {
     closePopup();
   }
 });

@@ -36,12 +36,8 @@ const hasInvalidInput = (inputList) => {
 };
 
 const setEventListeners = (formElement, configObject) => {
-  const inputList = Array.from(
-    formElement.querySelectorAll(configObject.inputSelector)
-  );
-  const buttonElement = formElement.querySelector(
-    configObject.submitButtonSelector
-  );
+  const inputList = Array.from(formElement.querySelectorAll(configObject.inputSelector));
+  const buttonElement = formElement.querySelector(configObject.submitButtonSelector);
   toggleButtonState(inputList, buttonElement, configObject.inactiveButtonClass);
 
   inputList.forEach((inputElement) => {
