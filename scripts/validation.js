@@ -35,15 +35,15 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
-const setEventListeners = (formElement, configObject) => {
-  const inputList = Array.from(formElement.querySelectorAll(configObject.inputSelector));
-  const buttonElement = formElement.querySelector(configObject.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement, configObject.inactiveButtonClass);
+const setEventListeners = (formElement, {inputSelector, submitButtonSelector, inactiveButtonClass, inputContainerSelector, inputErrorSelector, errorClass}) => {
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  const buttonElement = formElement.querySelector(submitButtonSelector);
+  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
-      checkInputValidity(inputElement, configObject.inputContainerSelector, configObject.inputErrorSelector, configObject.errorClass);
-      toggleButtonState(inputList, buttonElement, configObject.inactiveButtonClass);
+      checkInputValidity(inputElement, inputContainerSelector, inputErrorSelector, errorClass);
+      toggleButtonState(inputList, buttonElement, inactiveButtonClass);
     });
   });
 };
