@@ -138,22 +138,6 @@ function renderCard(card) {
   return cardElement;
 }
 
-function checkButtonState(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
-  const submitButton = formElement.querySelector(".popup__save-button");
-  toggleButtonState(inputList, submitButton, "popup__save-button_disabled");
-}
-
-//сброс проверки валидации
-function resetValidation(formElement) {
-  const inputErrors = Array.from(formElement.querySelectorAll(".popup__input-error"));
-  inputErrors.forEach((element) => {
-    element.textContent = "";
-    element.classList.remove("popup__input-error_active");
-  });
-  checkButtonState(editFormElement);
-}
-
 //открытие формы редактирования профиля
 function openEditForm() {
   editNameInput.value = nameElement.textContent;
