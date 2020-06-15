@@ -48,28 +48,32 @@ const editButton = document.querySelector(".profile__edit-button"),
         "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
     },
   ];
-//Здесь будет храниться открытая форма попапа
-let popupContent;
 
 const closePopupByClick = (evt) => {
   if (!evt.target.closest(".popup__content-container")) {
-    closePopup(popupContent);
+    closePopup();
   }
 };
 
 const closePopupByEsc = (evt) => {
   if (evt.keyCode === escapeCode) {
-    closePopup(popupContent);
+    closePopup();
   }
+}
+
+const hideAllContent = () => {
+  Array.from(popup.querySelectorAll(".popup__content-container")).forEach((container) => {
+    container.classList.remove("popup__content-container_visible");
+  });
 }
 
 //обработка открытия popup
 function showPopup(elementToShow) {
   const popupContentContainer = elementToShow.closest(".popup__content-container");
 
+  hideAllContent();
   popup.classList.add("popup_opened");
   popupContentContainer.classList.add("popup__content-container_visible");
-  popupContent = popupContentContainer;
 
   //обработчики закрытия формы
   document.addEventListener("keydown", closePopupByEsc);
@@ -77,9 +81,8 @@ function showPopup(elementToShow) {
 }
 
 //обработка закрытия popup
-function closePopup(elementToHide) {
+function closePopup() {
   popup.classList.remove("popup_opened");
-  elementToHide.classList.remove("popup__content-container_visible");
 
   document.removeEventListener("keydown", closePopupByEsc);
   popup.removeEventListener("click", closePopupByClick);
@@ -150,7 +153,7 @@ function editFormSubmitHandler(evt) {
 
   nameElement.textContent = editNameInput.value;
   positionElement.textContent = editPositionInput.value;
-  closePopup(popupContent);
+  closePopup();
 }
 
 //добавление карточки
@@ -168,13 +171,13 @@ function addFormSubmitHandler(evt) {
   };
 
   addCard(newCard);
-  closePopup(popupContent);
+  closePopup();
 }
 
 addButton.addEventListener("click", openAddForm);
 editButton.addEventListener("click", openEditForm);
 closeButton.addEventListener("click", () => {
-  closePopup(popupContent);
+  closePopup();
 });
 editFormElement.addEventListener("submit", editFormSubmitHandler);
 addFormElement.addEventListener("submit", addFormSubmitHandler);
