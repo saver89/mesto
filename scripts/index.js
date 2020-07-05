@@ -1,4 +1,5 @@
-import Card from './card.js';
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 
 const editButton = document.querySelector(".profile__edit-button"),
   addButton = document.querySelector(".profile__add-button"),
@@ -13,6 +14,7 @@ const editButton = document.querySelector(".profile__edit-button"),
   addNameInput = addFormElement.querySelector(".popup__input_add_name"),
   addUrlInput = addFormElement.querySelector(".popup__input_add_url"),
   cardsElement = document.querySelector(".elements"),
+  formList = Array.from(document.querySelectorAll('.popup__form-container')),
   escapeCode = 27,
   cards = [
     {
@@ -45,7 +47,19 @@ const editButton = document.querySelector(".profile__edit-button"),
       link:
         "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
     },
-  ];
+  ],
+  configObject = {
+    inputSelector: ".popup__input",
+    submitButtonSelector: ".popup__save-button",
+    inactiveButtonClass: "popup__save-button_disabled",
+    inputErrorSelector: ".popup__input-error",
+    inputContainerSelector: ".popup__form-field",
+    errorClass: "popup__input-error_active"
+  };
+
+//Объекты валидации для каждой формы
+const editFormValidation = new FormValidator(configObject, editFormElement);
+const addFormValidation = new FormValidator(configObject, addFormElement);
 
 const closePopupByClick = (evt) => {
   if (!evt.target.closest(".popup__content-container")) {
@@ -91,7 +105,7 @@ function openEditForm() {
   editNameInput.value = nameElement.textContent;
   editPositionInput.value = positionElement.textContent;
 
-  resetValidation(editFormElement);
+  editFormValidation.resetValidation();
   showPopup(editFormElement);
 }
 
@@ -100,7 +114,7 @@ function openAddForm() {
   addNameInput.value = "";
   addUrlInput.value = "";
 
-  resetValidation(addFormElement);
+  addFormValidation.resetValidation();
   showPopup(addFormElement);
 }
 
@@ -145,3 +159,6 @@ cards.forEach((card) => {
   const cardElement = cardObject.generateCard();
   cardsElement.prepend(cardElement);
 });
+
+editFormValidation.enableValidation();
+addFormValidation.enableValidation();
