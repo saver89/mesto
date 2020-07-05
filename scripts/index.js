@@ -1,3 +1,5 @@
+import Card from './card.js';
+
 const editButton = document.querySelector(".profile__edit-button"),
   addButton = document.querySelector(".profile__add-button"),
   nameElement = document.querySelector(".profile__name"),
@@ -10,11 +12,7 @@ const editButton = document.querySelector(".profile__edit-button"),
   addFormElement = popup.querySelector(".popup__form-container_add-form"),
   addNameInput = addFormElement.querySelector(".popup__input_add_name"),
   addUrlInput = addFormElement.querySelector(".popup__input_add_url"),
-  cardTemplate = document.querySelector("#card-template"),
   cardsElement = document.querySelector(".elements"),
-  popupImagePreview = document.querySelector(".popup__image-preview"),
-  popupImage = document.querySelector(".popup__image"),
-  popupImageName = document.querySelector(".popup__image-name"),
   escapeCode = 27,
   cards = [
     {
@@ -88,47 +86,6 @@ function closePopup() {
   popup.removeEventListener("click", closePopupByClick);
 }
 
-//нажатие на лайк
-function toggleLike(evt) {
-  evt.target.classList.toggle("element__like_liked");
-}
-
-function removeCard(cardElement) {
-  cardElement.remove();
-}
-
-//показать картинку карточки
-function showPreview(card) {
-  popupImage.src = card.link;
-  popupImage.alt = card.name;
-  popupImageName.textContent = card.name;
-
-  showPopup(popupImagePreview);
-}
-
-function renderCard(card) {
-  const cardElement = cardTemplate.content.cloneNode(true);
-  const imageElement = cardElement.querySelector(".element__image");
-  const removeButton = cardElement.querySelector(".element__remove");
-  const likeButton = cardElement.querySelector(".element__like");
-
-  imageElement.src = card.link;
-  imageElement.alt = card.name;
-  cardElement.querySelector(".element__name").textContent = card.name;
-
-  //обработка вывода изображения карточки
-  imageElement.addEventListener("click", () => {
-    showPreview(card);
-  });
-  //обработка удаления карточки
-  removeButton.addEventListener("click", (evt) => {
-    removeCard(evt.target.closest(".element"));
-  });
-  //обработка нажатия на кнопку "нравится"
-  likeButton.addEventListener("click", toggleLike);
-  return cardElement;
-}
-
 //открытие формы редактирования профиля
 function openEditForm() {
   editNameInput.value = nameElement.textContent;
@@ -158,7 +115,8 @@ function editFormSubmitHandler(evt) {
 
 //добавление карточки
 function addCard(card) {
-  const cardElement = renderCard(card);
+  const cardObject = new Card(card, '#card-template', showPopup);
+  const cardElement = cardObject.generateCard();
   cardsElement.prepend(cardElement);
 }
 
@@ -183,6 +141,7 @@ editFormElement.addEventListener("submit", editFormSubmitHandler);
 addFormElement.addEventListener("submit", addFormSubmitHandler);
 
 cards.forEach((card) => {
-  const cardElement = renderCard(card);
+  const cardObject = new Card(card, '#card-template', showPopup);
+  const cardElement = cardObject.generateCard();
   cardsElement.prepend(cardElement);
 });
