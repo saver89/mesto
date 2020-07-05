@@ -18,14 +18,14 @@ class Card {
     const popupImage = document.querySelector(".popup__image");
     popupImage.src = this._link;
     popupImage.alt = this._name;
-    popupImageName.textContent = this._name;
+    document.querySelector(".popup__image-name").textContent = this._name;
 
     this._showPopup(document.querySelector(".popup__image-preview"));
   }
 
   //обработчик удаления карточки
-  _removeCard() {
-    this._card.remove();
+  _removeCard(evt) {
+    evt.target.closest('.element').remove();
   }
 
   //обработчик нажатия на лайк
@@ -38,25 +38,32 @@ class Card {
     this._element
       .querySelector(".element__image")
       .addEventListener("click", () => {
-        _showPreview(card);
+        this._showPreview();
       });
+
     //обработка удаления карточки
     this._element
       .querySelector(".element__remove")
-      .addEventListener("click", this._removeCard);
+      .addEventListener("click", (evt) => {
+        this._removeCard(evt);
+      });
+
     //обработка нажатия на кнопку "нравится"
     this._element
       .querySelector(".element__like")
-      .addEventListener("click", this._toggleLike);
+      .addEventListener("click", (evt) => {
+        this._toggleLike(evt);
+      });
   }
 
-  generateCard(card) {
+  generateCard() {
     this._element = this._getTemplate();
     const imageElement = this._element.querySelector(".element__image");
 
     imageElement.src = this._link;
     imageElement.alt = this._name;
     this._element.querySelector(".element__name").textContent = this._name;
+    this._setEventListeners();
 
     return this._element;
   }
