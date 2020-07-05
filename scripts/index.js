@@ -14,7 +14,6 @@ const editButton = document.querySelector(".profile__edit-button"),
   addNameInput = addFormElement.querySelector(".popup__input_add_name"),
   addUrlInput = addFormElement.querySelector(".popup__input_add_url"),
   cardsElement = document.querySelector(".elements"),
-  formList = Array.from(document.querySelectorAll('.popup__form-container')),
   escapeCode = 27,
   cards = [
     {
