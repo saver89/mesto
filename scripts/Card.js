@@ -1,3 +1,5 @@
+const imageElement = this._element.querySelector(".element__image");
+
 class Card {
   constructor({ link, name }, cardSelector, showPopup) {
     this._cardSelector = cardSelector;
@@ -58,7 +60,6 @@ class Card {
 
   generateCard() {
     this._element = this._getTemplate();
-    const imageElement = this._element.querySelector(".element__image");
 
     imageElement.src = this._link;
     imageElement.alt = this._name;
