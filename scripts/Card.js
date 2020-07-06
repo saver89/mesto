@@ -1,4 +1,4 @@
-const imageElement = this._element.querySelector(".element__image");
+const popupImage = document.querySelector(".popup__image");
 
 class Card {
   constructor({ link, name }, cardSelector, showPopup) {
@@ -17,7 +17,6 @@ class Card {
 
   //показать картинку карточки
   _showPreview() {
-    const popupImage = document.querySelector(".popup__image");
     popupImage.src = this._link;
     popupImage.alt = this._name;
     document.querySelector(".popup__image-name").textContent = this._name;
@@ -60,6 +59,7 @@ class Card {
 
   generateCard() {
     this._element = this._getTemplate();
+    const imageElement = this._element.querySelector(".element__image");
 
     imageElement.src = this._link;
     imageElement.alt = this._name;
