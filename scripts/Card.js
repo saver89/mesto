@@ -11,7 +11,9 @@ class Card {
   _getTemplate() {
     const cardElement = document
       .querySelector(this._cardSelector)
-      .content.cloneNode(true);
+      .content.querySelector(".element")
+      .cloneNode(true);
+
     return cardElement;
   }
 
@@ -26,12 +28,15 @@ class Card {
 
   //обработчик удаления карточки
   _removeCard(evt) {
-    evt.target.closest('.element').remove();
+    this._element.remove();
+    this._element = null;
   }
 
   //обработчик нажатия на лайк
   _toggleLike(evt) {
-    evt.target.classList.toggle("element__like_liked");
+    this._element
+      .querySelector(".element__like")
+      .classList.toggle("element__like_liked");
   }
 
   _setEventListeners() {
