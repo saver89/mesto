@@ -1,9 +1,9 @@
-import Card from './card.js';
+import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
 const editButton = document.querySelector(".profile__edit-button"),
   addButton = document.querySelector(".profile__add-button"),
-  nameElement = document.querySelector(".profile__name"),
+  nameElement = documentgit.querySelector(".profile__name"),
   positionElement = document.querySelector(".profile__position"),
   popup = document.querySelector(".popup"),
   closeButton = popup.querySelector(".popup__close-button"),
