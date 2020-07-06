@@ -57,7 +57,7 @@ function showPopup(elementToShow) {
 
   //обработчики закрытия формы
   document.addEventListener("keydown", closePopupByEsc);
-  popup.addEventListener("click", closePopupByClick);
+  popup.addEventListener("mousedown", closePopupByClick);
 }
 
 //обработка закрытия popup
