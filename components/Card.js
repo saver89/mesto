@@ -1,11 +1,9 @@
-const popupImage = document.querySelector(".popup__image");
-
 class Card {
-  constructor({ link, name }, cardSelector, showPopup) {
+  constructor({ link, name }, cardSelector, handleCardClick) {
     this._cardSelector = cardSelector;
     this._link = link;
     this._name = name;
-    this._showPopup = showPopup;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -15,15 +13,6 @@ class Card {
       .cloneNode(true);
 
     return cardElement;
-  }
-
-  //показать картинку карточки
-  _showPreview() {
-    popupImage.src = this._link;
-    popupImage.alt = this._name;
-    document.querySelector(".popup__image-name").textContent = this._name;
-
-    this._showPopup(document.querySelector(".popup__image-preview"));
   }
 
   //обработчик удаления карточки
@@ -44,7 +33,7 @@ class Card {
     this._element
       .querySelector(".element__image")
       .addEventListener("click", () => {
-        this._showPreview();
+        this._handleCardClick(this._name, this._link);
       });
 
     //обработка удаления карточки
@@ -72,6 +61,14 @@ class Card {
     this._setEventListeners();
 
     return this._element;
+  }
+
+  getName() {
+    return this._name;
+  }
+
+  getLink() {
+    return this._link;
   }
 }
 
