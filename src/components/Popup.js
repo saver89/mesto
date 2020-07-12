@@ -1,4 +1,4 @@
-import { escapeCode, closeButtonSelector } from '../utils/constants.js';
+import { escapeCode, closeButtonSelector } from "../utils/constants.js";
 
 class Popup {
   constructor(popupSelector) {
@@ -6,13 +6,13 @@ class Popup {
     this._closeButton = this._popup.querySelector(closeButtonSelector);
   }
 
-  _handleEscClose = (evt) => {
+  _handleEscClose(evt) {
     if (evt.keyCode === escapeCode) {
       this.close();
     }
   }
 
-  _handleOutsideClickClose = (evt) => {
+  _handleOutsideClickClose(evt) {
     if (!evt.target.closest(".popup__content-container") && !evt.target.classList.contains("popup__close-button")) {
       this.close();
     }
@@ -23,8 +23,12 @@ class Popup {
       this.close();
     });
     //обработчики закрытия формы
-    document.addEventListener("keydown", this._handleEscClose);
-    this._popup.addEventListener("mousedown", this._handleOutsideClickClose);
+    document.addEventListener("keydown", (evt) => {
+      this._handleEscClose(evt);
+    });
+    this._popup.addEventListener("mousedown", (evt) => {
+      this._handleOutsideClickClose(evt);
+    });
   }
 
   open() {

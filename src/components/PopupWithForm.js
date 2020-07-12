@@ -10,7 +10,7 @@ class PopupWithForm extends Popup {
     this._form = this._popup.querySelector(formSelector);
   }
 
-  _getInputValues = () => {
+  _getInputValues() {
     const inputValuesObject = this._inputList.reduce((accumulator, input) => {
       accumulator[input.name] = input.value;
 
@@ -20,7 +20,7 @@ class PopupWithForm extends Popup {
     return inputValuesObject;
   };
 
-  _setInputValues = (data) => {
+  _setInputValues(data) {
     this._inputList.forEach( input => {
       input.value = data[input.name];
     });
@@ -34,7 +34,7 @@ class PopupWithForm extends Popup {
     });
   }
 
-  open = (data) => {
+  open(data) {
     if (data) {
       this._setInputValues(data);
     }
