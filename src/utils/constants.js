@@ -42,6 +42,8 @@ export const initialCards = [
   editPopupSelector = ".popup_edit-form",
   formInputSelector = ".popup__input",
   cardsElementSelector = ".elements",
+  popupImageSelector = '.popup__image',
+  popupImageNameSelector = '.popup__image-name',
   escapeCode = 27,
   configObject = {
     inputSelector: ".popup__input",

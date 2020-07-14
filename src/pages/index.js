@@ -3,6 +3,8 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 import {
   configObject,
   editFormElement,
@@ -15,9 +17,12 @@ import {
   editButton,
   nameSelector,
   positionSelector,
+  closeButtonSelector,
+  formSelector,
+  formInputSelector,
+  popupImageSelector,
+  popupImageNameSelector
 } from "../utils/constants.js";
-import PopupWithForm from "../components/PopupWithForm.js";
-import UserInfo from "../components/UserInfo.js";
 
 //Объекты валидации для каждой формы
 const editFormValidation = new FormValidator(configObject, editFormElement);
@@ -30,7 +35,12 @@ const userInfo = new UserInfo({
 });
 
 //Попап отображения изображения
-const popupWithImage = new PopupWithImage(".popup_image-preview");
+const popupWithImage = new PopupWithImage({
+  popupSelector: ".popup_image-preview",
+  closeButtonSelector,
+  popupImageSelector,
+  popupImageNameSelector
+});
 
 //Список карточек
 const cardsSection = new Section(
@@ -66,16 +76,16 @@ const editSumbitHandler = (evt, info) => {
 
 //Попап добавления карточки
 const popupAddForm = new PopupWithForm(
-  addPopupSelector,
+  { popupSelector: addPopupSelector, closeButtonSelector, formSelector, formInputSelector },
   addSubmitHandler,
   () => {
-    addFormValidation.resetValidation()
+    addFormValidation.resetValidation();
   }
 );
 
 //Попап редактирования данных пользователя
 const popupEditForm = new PopupWithForm(
-  editPopupSelector,
+  { popupSelector: editPopupSelector, closeButtonSelector, formSelector, formInputSelector },
   editSumbitHandler,
   () => {
     editFormValidation.resetValidation()

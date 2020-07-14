@@ -1,15 +1,16 @@
-import { escapeCode, closeButtonSelector } from "../utils/constants.js";
+import { escapeCode } from "../utils/constants.js";
 
 class Popup {
-  constructor(popupSelector) {
+  constructor({popupSelector, closeButtonSelector}) {
     this._popup = document.querySelector(popupSelector);
     this._closeButton = this._popup.querySelector(closeButtonSelector);
-  }
 
-  _handleEscClose(evt) {
-    if (evt.keyCode === escapeCode) {
-      this.close();
-    }
+    //т.к. bind возвращает новую функцию объект сохраним ее как свойство класса
+    this._handleEscClose = function(evt) {
+      if (evt.keyCode === escapeCode) {
+        this.close();
+      }
+    }.bind(this);
   }
 
   _handleOutsideClickClose(evt) {
@@ -19,13 +20,11 @@ class Popup {
   }
 
   setEventListeners() {
+    //обработчик закрытия формы при нажатии на кнопку закрытия
     this._closeButton.addEventListener("click", () => {
       this.close();
     });
-    //обработчики закрытия формы
-    document.addEventListener("keydown", (evt) => {
-      this._handleEscClose(evt);
-    });
+    //обработчик закрытия формы при нажатии вне области формы
     this._popup.addEventListener("mousedown", (evt) => {
       this._handleOutsideClickClose(evt);
     });
@@ -33,10 +32,14 @@ class Popup {
 
   open() {
     this._popup.classList.add("popup_opened");
+
+    //обработчик закрытия формы при нажатии клавиши esc
+    document.addEventListener("keydown", this._handleEscClose);
   }
 
   close() {
     this._popup.classList.remove("popup_opened");
+    document.removeEventListener("keydown", this._handleEscClose);
   }
 }
 
