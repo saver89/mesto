@@ -1,5 +1,5 @@
-.popup__save-button {
-  margin-top: 30px;
+.popup__submit-button {
+  margin-top: 38px;
   height: 50px;
   width: 100%;
   background-color: #000;
@@ -13,16 +13,16 @@
   border-radius: 2px;
 }
 
-.popup__save-button:focus {
+.popup__submit-button:focus {
   outline: none;
 }
 
-.popup__save-button:hover:enabled {
+.popup__submit-button:hover:enabled {
   background-color: rgb(0, 0, 0, .8);
 }
 
 @media screen and (max-width:520px) {
-  .popup__save-button {
+  .popup__submit-button {
     margin-top: 28px;
     font-size: 14px;
     line-height: 17px;

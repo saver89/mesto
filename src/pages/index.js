@@ -5,11 +5,11 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js";
 import {
   configObject,
   editFormElement,
   addFormElement,
-  initialCards,
   cardsElementSelector,
   addPopupSelector,
   editPopupSelector,
@@ -21,8 +21,19 @@ import {
   formSelector,
   formInputSelector,
   popupImageSelector,
-  popupImageNameSelector
+  popupImageNameSelector,
+  elementLikedClass,
+  elementLikeSelector,
+  elementLikeCounterSelector,
+  elementImageSelector,
+  elementRemoveSelector,
+  elementNameSelector,
+  elementSelector
 } from "../utils/constants.js";
+
+const api = new Api("https://mesto.nomoreparties.co/v1/cohort-13", {
+  authorization: "d0402095-4250-4903-b400-52c8ec468fa5",
+});
 
 //Объекты валидации для каждой формы
 const editFormValidation = new FormValidator(configObject, editFormElement);
@@ -42,22 +53,46 @@ const popupWithImage = new PopupWithImage({
   popupImageNameSelector
 });
 
-//Список карточек
-const cardsSection = new Section(
-  {
-    items: initialCards,
-    renderer: (card) => {
-      addCard(card);
+//Отрисовка карточек в случае успешного получения ответа
+let cardsSection;
+const successInitialCardsHandler = (initialCards) => {
+  cardsSection = new Section(
+    {
+      items: initialCards,
+      renderer: (card) => {
+        addCard(card);
+      },
     },
-  },
-  cardsElementSelector
-);
+    cardsElementSelector
+  );
+
+  cardsSection.renderItems();
+};
+//Вывод ошибки в случае неуспешного ответа
+const errorInitialCardsHandler = (err) => {
+  console.log(err);
+}
+api.getInitialsCards(successInitialCardsHandler, errorInitialCardsHandler);
+
 
 //Добавление объекта карточки и отрисовка в секции
 function addCard(card) {
-  const cardObject = new Card(card, "#card-template", (name, link) => {
-    popupWithImage.open(name, link);
-  });
+  const cardObject = new Card(
+    card,
+    {
+      cardSelector: "#card-template",
+      likeSelector: elementLikeSelector,
+      likedClass: elementLikedClass,
+      imageSelector: elementImageSelector,
+      removeSelector: elementRemoveSelector,
+      nameSelector: elementNameSelector,
+      likeCounterSelector: elementLikeCounterSelector,
+      elementSelector,
+    },
+    (name, link) => {
+      popupWithImage.open(name, link);
+    }
+  );
   const cardElement = cardObject.generateCard();
   cardsSection.addItem(cardElement);
 }
@@ -109,4 +144,3 @@ addButton.addEventListener("click", () => {
 setEventListeners();
 editFormValidation.enableValidation();
 addFormValidation.enableValidation();
-cardsSection.renderItems();
