@@ -2,9 +2,12 @@
 @import url("./__image/element__image.css");
 @import url("./__info-container/element__info-container.css");
 @import url("./__like/element__like.css");
+@import url("./__like-container/element__like-container.css");
+@import url("./__like-counter/element__like-counter.css");
 @import url("./__like_liked/element__like_liked.css");
 @import url("./__name/element__name.css");
 @import url("./__remove/element__remove.css");
+@import url("./__remove_visible/element__remove_visible.css");
 
 .element {
   border-radius: 10px;

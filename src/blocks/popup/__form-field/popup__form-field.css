@@ -3,3 +3,11 @@
   margin-bottom: 18px;
   display: flex;
 }
+
+.popup__form-field:first-of-type {
+  margin-top: 41px;
+}
+
+.popup__form-field:last-of-type {
+  margin-bottom: 10px;
+}
