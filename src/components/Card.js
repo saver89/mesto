@@ -1,15 +1,35 @@
 class Card {
-  constructor({ link, name }, cardSelector, handleCardClick) {
+  constructor(
+    { link, name, likes, _id, owner, createdAt },
+    { cardSelector, likeCounterSelector, likeSelector, likedClass, imageSelector, removeSelector, nameSelector, elementSelector },
+    handleCardClick
+  ) {
+    //css селекторы для определения элементов управления карточкой
+    this._elementSelector = elementSelector
     this._cardSelector = cardSelector;
+    this._likeSelector = likeSelector;
+    this._likeCounterSelector = likeCounterSelector;
+    this._likedClass = likedClass;
+    this._imageSelector = imageSelector;
+    this._removeSelector = removeSelector;
+    this._nameSelector = nameSelector;
+
+    //Свойства карточки
     this._link = link;
     this._name = name;
+    this._likes = likes;
+    this._id = _id;
+    this._owner = owner;
+    this._createdAt = createdAt;
+
+    //Обработчики событий
     this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
     const cardElement = document
       .querySelector(this._cardSelector)
-      .content.querySelector(".element")
+      .content.querySelector(this._elementSelector)
       .cloneNode(true);
 
     return cardElement;
@@ -24,28 +44,28 @@ class Card {
   //обработчик нажатия на лайк
   _toggleLike(evt) {
     this._element
-      .querySelector(".element__like")
-      .classList.toggle("element__like_liked");
+      .querySelector(this._likeSelector)
+      .classList.toggle(this._likedClass);
   }
 
   _setEventListeners() {
     //обработка вывода изображения карточки
     this._element
-      .querySelector(".element__image")
+      .querySelector(this._imageSelector)
       .addEventListener("click", () => {
         this._handleCardClick(this._name, this._link);
       });
 
     //обработка удаления карточки
     this._element
-      .querySelector(".element__remove")
+      .querySelector(this._removeSelector)
       .addEventListener("click", (evt) => {
         this._removeCard(evt);
       });
 
     //обработка нажатия на кнопку "нравится"
     this._element
-      .querySelector(".element__like")
+      .querySelector(this._likeSelector)
       .addEventListener("click", (evt) => {
         this._toggleLike(evt);
       });
@@ -53,22 +73,15 @@ class Card {
 
   generateCard() {
     this._element = this._getTemplate();
-    const imageElement = this._element.querySelector(".element__image");
+    const imageElement = this._element.querySelector(this._imageSelector);
 
     imageElement.src = this._link;
     imageElement.alt = this._name;
-    this._element.querySelector(".element__name").textContent = this._name;
+    this._element.querySelector(this._likeCounterSelector).textContent = this._likes.length;
+    this._element.querySelector(this._nameSelector).textContent = this._name;
     this._setEventListeners();
 
     return this._element;
-  }
-
-  getName() {
-    return this._name;
-  }
-
-  getLink() {
-    return this._link;
   }
 }
 
