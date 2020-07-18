@@ -24,6 +24,7 @@ import {
   aboutSelector,
   avatarSelector,
   closeButtonSelector,
+  submitButtonSelector,
   formSelector,
   formInputSelector,
   popupImageSelector,
@@ -133,49 +134,66 @@ function addCard(card, isAdded = false) {
   cardsSection.addItem(cardElement, isAdded);
 }
 
+//Обработчики событий "submit" форм
 const addSubmitHandler = (evt, card) => {
   evt.preventDefault();
 
+  popupAddForm.editSubmitText("Сохранение...");
   api.postCard(card).then((postedCard) => {
     addCard(postedCard, true);
   }).catch((err) => {
     console.log(err);
+  }).finally(() => {
+    popupAddForm.close();
+    popupAddForm.resetSubmitText();
   });
 };
 
 const editSumbitHandler = (evt, info) => {
   evt.preventDefault();
 
+  popupEditForm.editSubmitText("Сохранение...");
   api.editUserInfo(info).then(() => {
     userInfo.setUserInfo(info);
   }).catch(err => {
     console.log(err);
+  }).finally(() => {
+    popupEditForm.close();
+    popupEditForm.resetSubmitText();
   });
 };
 
 const removeSubmitHandler = (evt, card) => {
   evt.preventDefault();
 
+  popupConfirmForm.editSubmitText("Сохранение...")
   api.removeCard(card.getId()).then(() => {
     card.hideCard();
   }).catch(err => {
     console.log(err);
+  }).finally(() => {
+    popupConfirmForm.close();
+    popupConfirmForm.resetSubmitText();
   });
 };
 
 const avatarSumbitHandler = (evt, {link}) => {
   evt.preventDefault();
 
+  popupAvatarForm.editSubmitText("Сохранение...");
   api.editAvatar(link).then(() => {
     userInfo.setUserAvatar(link);
   }).catch(err => {
     console.log(err);
+  }).finally(() => {
+    popupAvatarForm.close();
+    popupAvatarForm.resetSubmitText();
   });
 };
 
 //Попап добавления карточки
 const popupAddForm = new PopupWithForm(
-  { popupSelector: addPopupSelector, closeButtonSelector, formSelector, formInputSelector },
+  { popupSelector: addPopupSelector, closeButtonSelector, formSelector, formInputSelector, submitButtonSelector },
   addSubmitHandler,
   () => {
     addFormValidation.resetValidation();
@@ -184,7 +202,7 @@ const popupAddForm = new PopupWithForm(
 
 //Попап редактирования данных пользователя
 const popupEditForm = new PopupWithForm(
-  { popupSelector: editPopupSelector, closeButtonSelector, formSelector, formInputSelector },
+  { popupSelector: editPopupSelector, closeButtonSelector, formSelector, formInputSelector, submitButtonSelector },
   editSumbitHandler,
   () => {
     editFormValidation.resetValidation()
@@ -193,7 +211,7 @@ const popupEditForm = new PopupWithForm(
 
 //Попап подтверждения
 const popupConfirmForm = new PopupConfirm(
-  { popupSelector: confirmPopupSelector, closeButtonSelector, formSelector },
+  { popupSelector: confirmPopupSelector, closeButtonSelector, formSelector, submitButtonSelector },
   (evt, card) => {
     removeSubmitHandler(evt, card);
   }
@@ -201,7 +219,7 @@ const popupConfirmForm = new PopupConfirm(
 
 //Попап редактирования аватара пользователя
 const popupAvatarForm = new PopupWithForm(
-  { popupSelector: updateAvatarPopupSelector, closeButtonSelector, formSelector, formInputSelector },
+  { popupSelector: updateAvatarPopupSelector, closeButtonSelector, formSelector, formInputSelector, submitButtonSelector },
   avatarSumbitHandler,
   () => {
     avatarFormValidation.resetValidation()
