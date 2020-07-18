@@ -49,6 +49,10 @@ class UserInfo {
 
     this._renderInfo();
   }
+
+  getUserAvatar() {
+    return this._avatar;
+  }
 }
 
 export default UserInfo;

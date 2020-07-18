@@ -51,6 +51,10 @@ class Api {
   editUserInfo(info) {
     return this._fetchApi("/users/me", "PATCH", {"Content-Type": "application/json"}, info);
   }
+
+  editAvatar(link) {
+    return this._fetchApi("/users/me/avatar", "PATCH", {"Content-Type": "application/json"}, {avatar: link});
+  }
 }
 
 export default Api;

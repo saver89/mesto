@@ -1,5 +1,6 @@
 export const editButton = document.querySelector(".profile__edit-button"),
   addButton = document.querySelector(".profile__add-button"),
+  avatarButton = document.querySelector(".profile__avatar-edit"),
   nameSelector = ".profile__name",
   aboutSelector = ".profile__position",
   avatarSelector = ".profile__avatar",

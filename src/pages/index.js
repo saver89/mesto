@@ -11,12 +11,15 @@ import {
   configObject,
   editFormElement,
   addFormElement,
+  updateAvatarFormElement,
   cardsElementSelector,
   addPopupSelector,
   editPopupSelector,
   confirmPopupSelector,
+  updateAvatarPopupSelector,
   addButton,
   editButton,
+  avatarButton,
   nameSelector,
   aboutSelector,
   avatarSelector,
@@ -42,6 +45,7 @@ const api = new Api("https://mesto.nomoreparties.co/v1/cohort-13", {
 //Объекты валидации для каждой формы
 const editFormValidation = new FormValidator(configObject, editFormElement);
 const addFormValidation = new FormValidator(configObject, addFormElement);
+const avatarFormValidation = new FormValidator(configObject, updateAvatarFormElement);
 
 //информация о пользователе
 let userInfo;
@@ -159,6 +163,16 @@ const removeSubmitHandler = (evt, card) => {
   });
 };
 
+const avatarSumbitHandler = (evt, {link}) => {
+  evt.preventDefault();
+
+  api.editAvatar(link).then(() => {
+    userInfo.setUserAvatar(link);
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 //Попап добавления карточки
 const popupAddForm = new PopupWithForm(
   { popupSelector: addPopupSelector, closeButtonSelector, formSelector, formInputSelector },
@@ -185,24 +199,38 @@ const popupConfirmForm = new PopupConfirm(
   }
 );
 
+//Попап редактирования аватара пользователя
+const popupAvatarForm = new PopupWithForm(
+  { popupSelector: updateAvatarPopupSelector, closeButtonSelector, formSelector, formInputSelector },
+  avatarSumbitHandler,
+  () => {
+    avatarFormValidation.resetValidation()
+  }
+);
+
 const setEventListeners = () => {
   popupWithImage.setEventListeners();
   popupAddForm.setEventListeners();
   popupEditForm.setEventListeners();
   popupConfirmForm.setEventListeners();
-};
+  popupAvatarForm.setEventListeners();
 
-editButton.addEventListener("click", () => {
-  const info = userInfo.getUserInfo();
-  popupEditForm.open(info);
-});
-addButton.addEventListener("click", () => {
-  popupAddForm.open({ name: "", link: "" });
-});
+  editButton.addEventListener("click", () => {
+    const info = userInfo.getUserInfo();
+    popupEditForm.open(info);
+  });
+  addButton.addEventListener("click", () => {
+    popupAddForm.open({ name: "", link: "" });
+  });
+  avatarButton.addEventListener("click", () => {
+    popupAvatarForm.open({ link: userInfo.getUserAvatar() });
+  });
+};
 
 setEventListeners();
 editFormValidation.enableValidation();
 addFormValidation.enableValidation();
+avatarFormValidation.enableValidation();
 
 //Получение информации из апи
 api.getUserInfo()
