@@ -106,6 +106,21 @@ function addCard(card, isAdded = false) {
       },
       handleRemoveClick: () => {
         popupConfirmForm.open(cardObject);
+      },
+      handleLikeClick: () => {
+        let apiResult;
+        if (cardObject.isLiked(userInfo.getUserId())) {
+          apiResult = api.unlikeCard(cardObject.getId());
+        } else {
+          apiResult = api.likeCard(cardObject.getId());
+        }
+
+        apiResult.then((cardResponse) => {
+          cardObject.setLikes(cardResponse.likes);
+          cardObject.renderLike(userInfo.getUserId());
+        }).catch(err => {
+          console.log(err);
+        });
       }
     }
 
@@ -137,7 +152,7 @@ const editSumbitHandler = (evt, info) => {
 const removeSubmitHandler = (evt, card) => {
   evt.preventDefault();
 
-  api.removeCard(card.getId()).then(res => {
+  api.removeCard(card.getId()).then(() => {
     card.hideCard();
   }).catch(err => {
     console.log(err);
@@ -189,6 +204,7 @@ setEventListeners();
 editFormValidation.enableValidation();
 addFormValidation.enableValidation();
 
+//Получение информации из апи
 api.getUserInfo()
   .then((info) => {
     successUserInfoHandler(info);

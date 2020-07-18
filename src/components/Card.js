@@ -14,7 +14,8 @@ class Card {
     },
     {
       handleCardClick,
-      handleRemoveClick
+      handleRemoveClick,
+      handleLikeClick
     }
   ) {
     //css селекторы для определения элементов управления карточкой
@@ -39,6 +40,7 @@ class Card {
     //Обработчики событий
     this._handleCardClick = handleCardClick;
     this._handleRemoveClick = handleRemoveClick;
+    this._handleLikeClick = handleLikeClick;
   }
 
   _getTemplate() {
@@ -48,19 +50,6 @@ class Card {
       .cloneNode(true);
 
     return cardElement;
-  }
-
-  //обработчик удаления карточки
-  hideCard() {
-    this._element.remove();
-    this._element = null;
-  }
-
-  //обработчик нажатия на лайк
-  _toggleLike(evt) {
-    this._element
-      .querySelector(this._likeSelector)
-      .classList.toggle(this._likedClass);
   }
 
   _setEventListeners() {
@@ -82,8 +71,33 @@ class Card {
     this._element
       .querySelector(this._likeSelector)
       .addEventListener("click", (evt) => {
-        this._toggleLike(evt);
+        this._handleLikeClick(this._id);
       });
+  }
+
+  //обработчик удаления карточки
+  hideCard() {
+    this._element.remove();
+    this._element = null;
+  }
+
+  isLiked(currentUserId) {
+    return this._likes.some(like => like._id === currentUserId);
+  }
+
+  //отрисовать информацию о лайках
+  renderLike(currentUserId) {
+    if (this.isLiked(currentUserId)) {
+      this._element
+        .querySelector(this._likeSelector)
+        .classList.add(this._likedClass);
+    } else {
+      this._element
+        .querySelector(this._likeSelector)
+        .classList.remove(this._likedClass);
+    }
+
+    this._element.querySelector(this._likeCounterSelector).textContent = this._likes.length;
   }
 
   generateCard(currentUserId) {
@@ -92,7 +106,6 @@ class Card {
 
     imageElement.src = this._link;
     imageElement.alt = this._name;
-    this._element.querySelector(this._likeCounterSelector).textContent = this._likes.length;
     this._element.querySelector(this._nameSelector).textContent = this._name;
 
     if (this._owner._id === currentUserId) {
@@ -100,6 +113,7 @@ class Card {
         .querySelector(this._removeSelector)
         .classList.add(this._removeVisibleClass);
     }
+    this.renderLike(currentUserId);
 
     this._setEventListeners();
 
@@ -108,6 +122,10 @@ class Card {
 
   getId() {
     return this._id;
+  }
+
+  setLikes(likes) {
+    this._likes = likes;
   }
 }
 
