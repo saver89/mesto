@@ -14,7 +14,7 @@ class Popup {
   }
 
   _handleOutsideClickClose(evt) {
-    if (!evt.target.closest(".popup__content-container") && !evt.target.classList.contains("popup__close-button")) {
+    if (!evt.target.closest(".popup__form-container") && !evt.target.classList.contains("popup__close-button")) {
       this.close();
     }
   }

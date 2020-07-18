@@ -11,8 +11,15 @@ class Section {
     });
   }
 
-  addItem(element) {
-    this._containerElement.prepend(element);
+  addItem(element, isAdded) {
+    //изначально фотографии отсортированы по дате добавления по убыванию, поэтому при добавлении используется append,
+    //но новые фотографии надо помещать в начало списка, поэтому для них используется prepend
+    if (isAdded) {
+      this._containerElement.prepend(element);
+    } else {
+      this._containerElement.append(element);
+    }
+
   }
 }
 

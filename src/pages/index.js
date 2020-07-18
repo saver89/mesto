@@ -16,7 +16,8 @@ import {
   addButton,
   editButton,
   nameSelector,
-  positionSelector,
+  aboutSelector,
+  avatarSelector,
   closeButtonSelector,
   formSelector,
   formInputSelector,
@@ -27,6 +28,7 @@ import {
   elementLikeCounterSelector,
   elementImageSelector,
   elementRemoveSelector,
+  elementRemoveVisibleClass,
   elementNameSelector,
   elementSelector
 } from "../utils/constants.js";
@@ -40,10 +42,18 @@ const editFormValidation = new FormValidator(configObject, editFormElement);
 const addFormValidation = new FormValidator(configObject, addFormElement);
 
 //информация о пользователе
-const userInfo = new UserInfo({
-  nameSelector: nameSelector,
-  positionSelector: positionSelector,
-});
+let userInfo;
+const successUserInfoHandler = (info) => {
+  userInfo = new UserInfo({
+    nameSelector,
+    aboutSelector,
+    avatarSelector
+  }, info);
+};
+const errorUserInfoHandler = (err) => {
+  console.log(err);
+};
+
 
 //Попап отображения изображения
 const popupWithImage = new PopupWithImage({
@@ -53,8 +63,8 @@ const popupWithImage = new PopupWithImage({
   popupImageNameSelector
 });
 
-//Отрисовка карточек в случае успешного получения ответа
 let cardsSection;
+//Отрисовка карточек в случае успешного получения ответа
 const successInitialCardsHandler = (initialCards) => {
   cardsSection = new Section(
     {
@@ -72,11 +82,9 @@ const successInitialCardsHandler = (initialCards) => {
 const errorInitialCardsHandler = (err) => {
   console.log(err);
 }
-api.getInitialsCards(successInitialCardsHandler, errorInitialCardsHandler);
-
 
 //Добавление объекта карточки и отрисовка в секции
-function addCard(card) {
+function addCard(card, isAdded = false) {
   const cardObject = new Card(
     card,
     {
@@ -85,6 +93,7 @@ function addCard(card) {
       likedClass: elementLikedClass,
       imageSelector: elementImageSelector,
       removeSelector: elementRemoveSelector,
+      removeVisibleClass: elementRemoveVisibleClass,
       nameSelector: elementNameSelector,
       likeCounterSelector: elementLikeCounterSelector,
       elementSelector,
@@ -93,20 +102,28 @@ function addCard(card) {
       popupWithImage.open(name, link);
     }
   );
-  const cardElement = cardObject.generateCard();
-  cardsSection.addItem(cardElement);
+  const cardElement = cardObject.generateCard(userInfo.getUserId());
+  cardsSection.addItem(cardElement, isAdded);
 }
 
 const addSubmitHandler = (evt, card) => {
   evt.preventDefault();
 
-  addCard(card);
+  api.postCard(card).then((postedCard) => {
+    addCard(postedCard, true);
+  }).catch((err) => {
+    console.log(err);
+  });
 };
 
 const editSumbitHandler = (evt, info) => {
   evt.preventDefault();
 
-  userInfo.setUserInfo(info);
+  api.editUserInfo(info).then(() => {
+    userInfo.setUserInfo(info);
+  }).catch(err => {
+    console.log(err);
+  });
 };
 
 //Попап добавления карточки
@@ -144,3 +161,13 @@ addButton.addEventListener("click", () => {
 setEventListeners();
 editFormValidation.enableValidation();
 addFormValidation.enableValidation();
+
+api.getUserInfo()
+  .then((info) => {
+    successUserInfoHandler(info);
+
+    api.getInitialsCards()
+      .then(successInitialCardsHandler)
+      .catch(errorInitialCardsHandler);
+  })
+  .catch(errorUserInfoHandler);

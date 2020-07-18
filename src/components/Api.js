@@ -4,19 +4,38 @@ class Api {
     this._headers = headers;
   }
 
-  getInitialsCards(successHandler, errorHandler) {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: "GET",
-      headers: { ...this._headers, "Content-Type": "application/json" },
-    }).then(res => {
+  _fetchApi(url, method, additionalHeaders, body) {
+    let fetchOptions = {
+      method: method,
+      headers: { ... this._headers, ...additionalHeaders },
+    };
+    if (body) {
+      fetchOptions.body = JSON.stringify(body);
+    }
+
+    return fetch(`${this._baseUrl}${url}`, fetchOptions).then(res => {
         if (res.ok) {
           return res.json();
         }
 
         return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-      })
-      .then(res => successHandler(res))
-      .catch(err => errorHandler(err));
+      });
+  }
+
+  getInitialsCards() {
+    return this._fetchApi("/cards", "GET");
+  }
+
+  postCard(card) {
+    return this._fetchApi("/cards", "POST", {"Content-Type": "application/json"}, card);
+  }
+
+  getUserInfo() {
+    return this._fetchApi("/users/me", "GET");
+  }
+
+  editUserInfo(info) {
+    return this._fetchApi("/users/me", "PATCH", {"Content-Type": "application/json"}, info);
   }
 }
 

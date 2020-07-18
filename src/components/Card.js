@@ -1,17 +1,28 @@
 class Card {
   constructor(
     { link, name, likes, _id, owner, createdAt },
-    { cardSelector, likeCounterSelector, likeSelector, likedClass, imageSelector, removeSelector, nameSelector, elementSelector },
+    {
+      cardSelector,
+      likeCounterSelector,
+      likeSelector,
+      likedClass,
+      imageSelector,
+      removeSelector,
+      removeVisibleClass,
+      nameSelector,
+      elementSelector,
+    },
     handleCardClick
   ) {
     //css селекторы для определения элементов управления карточкой
-    this._elementSelector = elementSelector
+    this._elementSelector = elementSelector;
     this._cardSelector = cardSelector;
     this._likeSelector = likeSelector;
     this._likeCounterSelector = likeCounterSelector;
     this._likedClass = likedClass;
     this._imageSelector = imageSelector;
     this._removeSelector = removeSelector;
+    this._removeVisibleClass = removeVisibleClass;
     this._nameSelector = nameSelector;
 
     //Свойства карточки
@@ -71,7 +82,7 @@ class Card {
       });
   }
 
-  generateCard() {
+  generateCard(currentUserId) {
     this._element = this._getTemplate();
     const imageElement = this._element.querySelector(this._imageSelector);
 
@@ -79,6 +90,13 @@ class Card {
     imageElement.alt = this._name;
     this._element.querySelector(this._likeCounterSelector).textContent = this._likes.length;
     this._element.querySelector(this._nameSelector).textContent = this._name;
+
+    if (this._owner._id === currentUserId) {
+      this._element
+        .querySelector(this._removeSelector)
+        .classList.add(this._removeVisibleClass);
+    }
+
     this._setEventListeners();
 
     return this._element;
