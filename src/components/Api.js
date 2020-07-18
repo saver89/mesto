@@ -35,6 +35,14 @@ class Api {
     return this._fetchApi(`/cards/${cardId}`, "DELETE");
   }
 
+  likeCard(cardId) {
+    return this._fetchApi(`/cards/likes/${cardId}`, "PUT");
+  }
+
+  unlikeCard(cardId) {
+    return this._fetchApi(`/cards/likes/${cardId}`, "DELETE");
+  }
+
   //Операции с данными пользователя
   getUserInfo() {
     return this._fetchApi("/users/me", "GET");
