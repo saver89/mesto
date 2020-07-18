@@ -22,6 +22,7 @@ class Api {
       });
   }
 
+  //Операции с карточками
   getInitialsCards() {
     return this._fetchApi("/cards", "GET");
   }
@@ -30,6 +31,11 @@ class Api {
     return this._fetchApi("/cards", "POST", {"Content-Type": "application/json"}, card);
   }
 
+  removeCard(cardId) {
+    return this._fetchApi(`/cards/${cardId}`, "DELETE");
+  }
+
+  //Операции с данными пользователя
   getUserInfo() {
     return this._fetchApi("/users/me", "GET");
   }

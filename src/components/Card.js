@@ -12,7 +12,10 @@ class Card {
       nameSelector,
       elementSelector,
     },
-    handleCardClick
+    {
+      handleCardClick,
+      handleRemoveClick
+    }
   ) {
     //css селекторы для определения элементов управления карточкой
     this._elementSelector = elementSelector;
@@ -35,6 +38,7 @@ class Card {
 
     //Обработчики событий
     this._handleCardClick = handleCardClick;
+    this._handleRemoveClick = handleRemoveClick;
   }
 
   _getTemplate() {
@@ -47,7 +51,7 @@ class Card {
   }
 
   //обработчик удаления карточки
-  _removeCard(evt) {
+  hideCard() {
     this._element.remove();
     this._element = null;
   }
@@ -70,8 +74,8 @@ class Card {
     //обработка удаления карточки
     this._element
       .querySelector(this._removeSelector)
-      .addEventListener("click", (evt) => {
-        this._removeCard(evt);
+      .addEventListener("click", () => {
+        this._handleRemoveClick();
       });
 
     //обработка нажатия на кнопку "нравится"
@@ -100,6 +104,10 @@ class Card {
     this._setEventListeners();
 
     return this._element;
+  }
+
+  getId() {
+    return this._id;
   }
 }
 

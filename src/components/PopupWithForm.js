@@ -38,7 +38,10 @@ class PopupWithForm extends Popup {
       this._setInputValues(data);
     }
 
-    this._openHandler();
+    if (this._openHandler) {
+      this._openHandler();
+    }
+
     super.open();
   }
 }

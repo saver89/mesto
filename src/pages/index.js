@@ -4,6 +4,7 @@ import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupConfirm from "../components/PopupConfirm.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import {
@@ -13,6 +14,7 @@ import {
   cardsElementSelector,
   addPopupSelector,
   editPopupSelector,
+  confirmPopupSelector,
   addButton,
   editButton,
   nameSelector,
@@ -98,9 +100,15 @@ function addCard(card, isAdded = false) {
       likeCounterSelector: elementLikeCounterSelector,
       elementSelector,
     },
-    (name, link) => {
-      popupWithImage.open(name, link);
+    {
+      handleCardClick: (name, link) => {
+        popupWithImage.open(name, link);
+      },
+      handleRemoveClick: () => {
+        popupConfirmForm.open(cardObject);
+      }
     }
+
   );
   const cardElement = cardObject.generateCard(userInfo.getUserId());
   cardsSection.addItem(cardElement, isAdded);
@@ -126,6 +134,16 @@ const editSumbitHandler = (evt, info) => {
   });
 };
 
+const removeSubmitHandler = (evt, card) => {
+  evt.preventDefault();
+
+  api.removeCard(card.getId()).then(res => {
+    card.hideCard();
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
 //Попап добавления карточки
 const popupAddForm = new PopupWithForm(
   { popupSelector: addPopupSelector, closeButtonSelector, formSelector, formInputSelector },
@@ -144,10 +162,19 @@ const popupEditForm = new PopupWithForm(
   }
 );
 
+//Попап подтверждения
+const popupConfirmForm = new PopupConfirm(
+  { popupSelector: confirmPopupSelector, closeButtonSelector, formSelector },
+  (evt, card) => {
+    removeSubmitHandler(evt, card);
+  }
+);
+
 const setEventListeners = () => {
   popupWithImage.setEventListeners();
   popupAddForm.setEventListeners();
   popupEditForm.setEventListeners();
+  popupConfirmForm.setEventListeners();
 };
 
 editButton.addEventListener("click", () => {
