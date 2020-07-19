@@ -114,9 +114,8 @@ function addCard(card, isAdded = false) {
         popupConfirmForm.open(cardObject);
       },
       handleLikeClick: () => {
-        let apiResult;
         const cardLiked = cardObject.isLiked(userInfo.getUserId());
-        apiResult = cardLiked ? api.unlikeCard(cardObject.getId()) : api.likeCard(cardObject.getId());
+        const apiResult = cardLiked ? api.unlikeCard(cardObject.getId()) : api.likeCard(cardObject.getId());
 
         apiResult.then((cardResponse) => {
           cardObject.setLikes(cardResponse.likes);
