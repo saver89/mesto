@@ -5,7 +5,7 @@ class Api {
   }
 
   _fetchApi(url, method, additionalHeaders, body) {
-    let fetchOptions = {
+    const fetchOptions = {
       method: method,
       headers: { ... this._headers, ...additionalHeaders },
     };
