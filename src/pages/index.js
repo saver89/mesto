@@ -9,17 +9,11 @@ import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import {
   configObject,
-  editFormElement,
-  addFormElement,
-  updateAvatarFormElement,
   cardsElementSelector,
   addPopupSelector,
   editPopupSelector,
   confirmPopupSelector,
   updateAvatarPopupSelector,
-  addButton,
-  editButton,
-  avatarButton,
   nameSelector,
   aboutSelector,
   avatarSelector,
@@ -38,6 +32,13 @@ import {
   elementNameSelector,
   elementSelector
 } from "../utils/constants.js";
+
+const editButton = document.querySelector(".profile__edit-button"),
+  addButton = document.querySelector(".profile__add-button"),
+  avatarButton = document.querySelector(".profile__avatar-edit"),
+  editFormElement = document.forms["edit-form"],
+  addFormElement = document.forms["add-form"],
+  updateAvatarFormElement = document.forms["update-avatar-form"];
 
 const api = new Api("https://mesto.nomoreparties.co/v1/cohort-13", {
   authorization: "d0402095-4250-4903-b400-52c8ec468fa5",
