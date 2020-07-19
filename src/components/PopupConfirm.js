@@ -1,11 +1,11 @@
 import Popup from "./Popup.js";
 
 class PopupConfirm extends Popup {
-  constructor({popupSelector, closeButtonSelector, formSelector, submitButtonSelector}, submitHandler) {
-    super({popupSelector, closeButtonSelector});
+  constructor(selectors, submitHandler) {
+    super({popupSelector: selectors.popupSelector, closeButtonSelector: selectors.closeButtonSelector});
     this._submitHandler = submitHandler;
-    this._form = this._popup.querySelector(formSelector);
-    this._submitButton = this._popup.querySelector(submitButtonSelector);
+    this._form = this._popup.querySelector(selectors.formSelector);
+    this._submitButton = this._popup.querySelector(selectors.submitButtonSelector);
     this._submitDefaultText = this._submitButton.textContent;
   }
 

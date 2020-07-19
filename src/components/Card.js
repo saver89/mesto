@@ -1,46 +1,28 @@
 class Card {
-  constructor(
-    { link, name, likes, _id, owner, createdAt },
-    {
-      cardSelector,
-      likeCounterSelector,
-      likeSelector,
-      likedClass,
-      imageSelector,
-      removeSelector,
-      removeVisibleClass,
-      nameSelector,
-      elementSelector,
-    },
-    {
-      handleCardClick,
-      handleRemoveClick,
-      handleLikeClick
-    }
-  ) {
+  constructor(props, selectors, handlers) {
     //css селекторы для определения элементов управления карточкой
-    this._elementSelector = elementSelector;
-    this._cardSelector = cardSelector;
-    this._likeSelector = likeSelector;
-    this._likeCounterSelector = likeCounterSelector;
-    this._likedClass = likedClass;
-    this._imageSelector = imageSelector;
-    this._removeSelector = removeSelector;
-    this._removeVisibleClass = removeVisibleClass;
-    this._nameSelector = nameSelector;
+    this._elementSelector = selectors.elementSelector;
+    this._cardSelector = selectors.cardSelector;
+    this._likeSelector = selectors.likeSelector;
+    this._likeCounterSelector = selectors.likeCounterSelector;
+    this._likedClass = selectors.likedClass;
+    this._imageSelector = selectors.imageSelector;
+    this._removeSelector = selectors.removeSelector;
+    this._removeVisibleClass = selectors.removeVisibleClass;
+    this._nameSelector = selectors.nameSelector;
 
     //Свойства карточки
-    this._link = link;
-    this._name = name;
-    this._likes = likes;
-    this._id = _id;
-    this._owner = owner;
-    this._createdAt = createdAt;
+    this._link = props.link;
+    this._name = props.name;
+    this._likes = props.likes;
+    this._id = props._id;
+    this._owner = props.owner;
+    this._createdAt = props.createdAt;
 
     //Обработчики событий
-    this._handleCardClick = handleCardClick;
-    this._handleRemoveClick = handleRemoveClick;
-    this._handleLikeClick = handleLikeClick;
+    this._handleCardClick = handlers.handleCardClick;
+    this._handleRemoveClick = handlers.handleRemoveClick;
+    this._handleLikeClick = handlers.handleLikeClick;
   }
 
   _getTemplate() {

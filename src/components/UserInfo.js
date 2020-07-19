@@ -1,16 +1,16 @@
 class UserInfo {
-  constructor({nameSelector, aboutSelector, avatarSelector}, {name, about, _id, avatar, cohort}) {
+  constructor(selectors, props) {
     //Селекторы вывода информации пользователя
-    this._nameElement = document.querySelector(nameSelector);
-    this._aboutElement = document.querySelector(aboutSelector);
-    this._avatarElement = document.querySelector(avatarSelector);
+    this._nameElement = document.querySelector(selectors.nameSelector);
+    this._aboutElement = document.querySelector(selectors.aboutSelector);
+    this._avatarElement = document.querySelector(selectors.avatarSelector);
 
     //Данные пользователя
-    this._name = name;
-    this._about = about;
-    this._id = _id;
-    this._avatar = avatar;
-    this._cohort = cohort;
+    this._name = props.name;
+    this._about = props.about;
+    this._id = props._id;
+    this._avatar = props.avatar;
+    this._cohort = props.cohort;
 
     this._renderInfo();
   }
