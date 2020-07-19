@@ -115,11 +115,8 @@ function addCard(card, isAdded = false) {
       },
       handleLikeClick: () => {
         let apiResult;
-        if (cardObject.isLiked(userInfo.getUserId())) {
-          apiResult = api.unlikeCard(cardObject.getId());
-        } else {
-          apiResult = api.likeCard(cardObject.getId());
-        }
+        const cardLiked = cardObject.isLiked(userInfo.getUserId());
+        apiResult = cardLiked ? api.unlikeCard(cardObject.getId()) : api.likeCard(cardObject.getId());
 
         apiResult.then((cardResponse) => {
           cardObject.setLikes(cardResponse.likes);
